@@ -46,15 +46,18 @@ const Login = () => {
       body: JSON.stringify(values),
     };
     const response = await fetch(LOGIN_URL, requestOptions);
+    let data = {};
     if (response.ok) {
-      const data = await response.json();
-      console.log("Response:", data);
-      auth.login();
+      try {
+        const data = await response.json();
+        console.log("Response:", data);
+        auth.login(data?.username);
+      } catch (error) {}
     }
   };
 
   return (
-    <div className="flex h-screen flex-col justify-center items-center">
+    <div className="flex h-screen flex-col">
       <Form {...form}>
         <Card className="mx-auto max-w-sm">
           <CardHeader>
@@ -102,7 +105,10 @@ const Login = () => {
                   </FormItem>
                 )}
               />
-              <Button className="w-full" type="submit">
+              <Button
+                className="w-full bg-primary outline bg-green-500"
+                type="submit"
+              >
                 Login
               </Button>
               <div className="mt-4 text-center text-sm">

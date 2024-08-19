@@ -1,6 +1,7 @@
 "use client";
 import { useAuth } from "@/components/auth/AuthProvider";
 import { ModeToggle } from "@/components/ModeToggle";
+import WaitlistForm from "@/components/WaitlistForm";
 import Image from "next/image";
 import useSWR from "swr";
 
@@ -21,10 +22,8 @@ export default function Home() {
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
       <div>
-        <ModeToggle />
-      </div>
-      <div>
         {auth.isAuthenticated ? "Hello User" : "Hello Guest, Please login"}
+        <WaitlistForm />
       </div>
     </main>
   );

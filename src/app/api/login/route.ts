@@ -6,8 +6,9 @@ import {
   setRefreshToken,
   getRefreshToken,
 } from "@/lib/auth";
+import { DJANGO_API_ENDPOINT } from "@/config/defaults";
 
-const API_LOGIN_URL = "http://localhost:8001/api/token/pair";
+const API_LOGIN_URL = `${DJANGO_API_ENDPOINT}/api/token/pair`;
 
 export async function POST(request: Request) {
   const currentAuthToken = getToken();
@@ -27,7 +28,14 @@ export async function POST(request: Request) {
       console.log("New Access Token:", data);
       setToken(data.access);
       setRefreshToken(data.refresh);
+      return NextResponse.json(
+        { username: data.username, loggedIn: true },
+        { status: 200 }
+      );
     }
   }
-  return NextResponse.json({ message: "hello" }, { status: 200 });
+  return NextResponse.json(
+    { message: "Login failed", loggedIn: false },
+    { status: 400 }
+  );
 }

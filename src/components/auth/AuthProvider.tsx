@@ -12,12 +12,14 @@ const LOCAL_STORAGE_KEY = "is_authenticated";
 const LOGIN_REDIRECT_URL = "/";
 const LOGOUT_REDIRECT_URL = "/login";
 const LOGIN_REQUIRED_URL = "/login";
+const LOCAL_USERNAME_KEY = "username";
 
 type AuthContextType = {
   isAuthenticated: boolean;
-  login: () => void;
+  login: (username?: string) => void;
   logout: () => void;
   loginRequiredRedirect: () => void;
+  username?: string;
 };
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -28,6 +30,7 @@ interface AuthProviderProps {
 
 export const AuthProvider = ({ children }: AuthProviderProps) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [username, setUsername] = useState("");
   const router = useRouter();
   const pathName = usePathname();
   const searchParams = useSearchParams();
@@ -37,8 +40,12 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
       const parsedIntKey = parseInt(storedAuthStatus);
       setIsAuthenticated(parsedIntKey === 1);
     }
+    const storedUsername = localStorage.getItem(LOCAL_USERNAME_KEY);
+    if (storedUsername) {
+      setUsername(storedUsername);
+    }
   }, []);
-  const login = () => {
+  const login = (username) => {
     setIsAuthenticated(true);
     localStorage.setItem(LOCAL_STORAGE_KEY, "1");
     const nextUrl = searchParams.get("next");
@@ -50,6 +57,13 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
       router.replace(nextUrl);
     } else {
       router.replace(LOGIN_REDIRECT_URL);
+    }
+
+    if (username) {
+      localStorage.setItem(LOCAL_USERNAME_KEY, username);
+      setUsername(username);
+    } else {
+      localStorage.removeItem(LOCAL_USERNAME_KEY);
     }
   };
   const logout = () => {
@@ -71,7 +85,13 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
 
   return (
     <AuthContext.Provider
-      value={{ isAuthenticated, login, logout, loginRequiredRedirect }}
+      value={{
+        isAuthenticated,
+        login,
+        logout,
+        loginRequiredRedirect,
+        username,
+      }}
     >
       {children}
     </AuthContext.Provider>
