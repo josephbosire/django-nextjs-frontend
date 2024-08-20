@@ -63,13 +63,11 @@ const WaitlistForm = () => {
       setMessage("Thank you for joining");
       setErrors(null);
     } else {
-      console.log("Encountered an error", result);
       setErrors(result);
     }
   };
 
   useEffect(() => {
-    console.log("Error Found:", errors);
     if (errors) {
       const fieldWithError = Object.keys(fieldErrorMapping).find((field) =>
         errors.hasOwnProperty(field)

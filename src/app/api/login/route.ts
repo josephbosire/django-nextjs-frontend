@@ -13,8 +13,6 @@ const API_LOGIN_URL = `${DJANGO_API_ENDPOINT}/api/token/pair`;
 export async function POST(request: Request) {
   const currentAuthToken = getToken();
   const currentRefreshToken = getRefreshToken();
-  console.log("Current Auth Token", currentAuthToken);
-  console.log("Current Refresh Auth Token", currentRefreshToken);
   if (!currentAuthToken) {
     const requestData = await request.json();
     const requestOptions = {
@@ -25,7 +23,6 @@ export async function POST(request: Request) {
     const response = await fetch(API_LOGIN_URL, requestOptions);
     if (response.ok) {
       const data = await response.json();
-      console.log("New Access Token:", data);
       setToken(data.access);
       setRefreshToken(data.refresh);
       return NextResponse.json(

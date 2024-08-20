@@ -7,14 +7,13 @@ const LOGOUT_URL = "/api/logout/";
 
 const Logout = () => {
   const auth = useAuth();
-  const handleLogout = async (event) => {
+  const handleLogout = async (event: React.MouseEvent<HTMLButtonElement>) => {
     const requestOptions = {
       method: "POST",
     };
     const response = await fetch(LOGOUT_URL, requestOptions);
     const data = await response.json();
     if (response.ok) {
-      console.log("Logged out");
       auth.logout();
     }
   };

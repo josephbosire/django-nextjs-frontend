@@ -10,7 +10,6 @@ const fetcher = async (...args: Parameters<typeof fetch>) =>
 
 export default function Home() {
   const auth = useAuth();
-  console.log(auth);
   // ONLY use useSWR for GET requests
   const { data, error, isLoading } = useSWR(
     "http://localhost:8001/api/hello",

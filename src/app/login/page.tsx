@@ -50,7 +50,6 @@ const Login = () => {
     if (response.ok) {
       try {
         const data = await response.json();
-        console.log("Response:", data);
         auth.login(data?.username);
       } catch (error) {}
     }
@@ -112,7 +111,7 @@ const Login = () => {
                 Login
               </Button>
               <div className="mt-4 text-center text-sm">
-                Don&apos;t have an account?{" "}
+                Don't have an account?{" "}
                 <Link href="#" className="underline">
                   Sign up
                 </Link>

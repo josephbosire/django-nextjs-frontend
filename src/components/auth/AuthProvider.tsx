@@ -45,14 +45,13 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
       setUsername(storedUsername);
     }
   }, []);
-  const login = (username) => {
+  const login = (username: string | undefined) => {
     setIsAuthenticated(true);
     localStorage.setItem(LOCAL_STORAGE_KEY, "1");
     const nextUrl = searchParams.get("next");
     const invalidNextUrl = ["/logout", "/login"];
     const nextUrlValid =
       nextUrl && nextUrl.startsWith("/") && !invalidNextUrl.includes(nextUrl);
-    console.log(nextUrlValid);
     if (nextUrlValid) {
       router.replace(nextUrl);
     } else {

@@ -29,8 +29,6 @@ export function DataTable<TData, TValue>({
   columns,
   data,
 }: DataTableProps<TData, TValue>) {
-  console.log("Columns:", columns);
-  console.log("Rows:", data);
   const router = useRouter();
   const table = useReactTable({
     data,
@@ -38,7 +36,7 @@ export function DataTable<TData, TValue>({
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
   });
-  console.log("Table Length", table.getRowModel().rows?.length);
+
   return (
     <div className="w-full">
       <div className="rounded-md border">

@@ -19,7 +19,6 @@ const WaitlistTable = () => {
   }, [error]);
   if (error) return <div>failed to load</div>;
   if (isLoading) return <div>loading...</div>;
-  console.log("Table Data:", data);
   return (
     <div className="mx-auto flex max-w-7xl flex-col space-y-14">
       <DataTable columns={columns} data={data} />
