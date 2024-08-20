@@ -8,7 +8,7 @@ import {
 } from "@/lib/auth";
 import { DJANGO_API_ENDPOINT } from "@/config/defaults";
 
-const API_LOGIN_URL = `${DJANGO_API_ENDPOINT}/api/token/pair`;
+const API_LOGIN_URL = `${DJANGO_API_ENDPOINT}/token/pair`;
 
 export async function POST(request: Request) {
   const currentAuthToken = getToken();
